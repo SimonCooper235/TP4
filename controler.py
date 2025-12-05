@@ -14,8 +14,11 @@ class Simulation_controler():
         self.__model=model
         self.__model.set_controller(self)
 
+    def ajout_object(self, object):
+        self.__model.ajout_object(object)
 
-
+    def update_view(self):
+        self.__view.paintEvent()
 
     def play(self):
         self.__model.play_Simulation()

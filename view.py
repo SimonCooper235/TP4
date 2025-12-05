@@ -11,18 +11,18 @@ class Simulation_view(QMainWindow):
 
         loadUi("ui/v1.ui", self) # TODO  faire le ui
 
-
+        # connection signals
         self.play_pushButton.clicked.connect(self.play)
         self.pause_pushButton.clicked.connect(self.pause)
         self.stop_pushButton.clicked.connect(self.stop)
-        # connection signals
 
 
 
     def set_controller(self, controller):
         self.__controller = controller
 
-
+    def ajout_object(self, object):
+        self.__controller.ajout_object(object)
 
     def play(self):
         print("play")
