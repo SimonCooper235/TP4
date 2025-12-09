@@ -1,11 +1,11 @@
 import sys
 import traceback
 
-from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtWidgets import QApplication
 
-from view import Simulation_view
-from model import Simulation_model
-from controler import Simulation_controler
+from view.view import Simulation_view
+from model.model import Simulation_model
+from controller.controller import Simulation_controller
 
 def qt_exception_hook(exctype, value, tb):
     traceback.print_exception(exctype, value, tb)
@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     view = Simulation_view()
     model = Simulation_model()
-    controler = Simulation_controler(model, view)
+    controler = Simulation_controller(model, view)
 
     window = view
     window.show()

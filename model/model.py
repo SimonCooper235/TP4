@@ -1,7 +1,11 @@
 import math
+import threading
+import time
 
 import pymunk
-from PyQt6.QtCore import pyqtSignal, QThread
+from PyQt6.QtCore import pyqtSignal, QThread, QObject
+
+from test import screen
 
 """
             Truc a faire / fonctionalité requise
@@ -12,22 +16,30 @@ from PyQt6.QtCore import pyqtSignal, QThread
  4- ajout d'un object
 
  """
-class Thread(QThread):
-    pass
+class Thread(threading.Thread):
+    etat = pyqtSignal(bool)
 
-class Simulation_model:
+    def run(self):
+        self.etat.emit(True)
+
+
+
+class Simulation_model(QObject):
     planets = []
     model_changed = pyqtSignal(list)
+    running = False
 
     def __init__(self):
+        super().__init__()
         self.create_sim()
 
     def create_sim(self):
         self.space = pymunk.Space()
         self.space.gravity = (0, 0)
         self.default_planets()
+        self.simuler()
 
-        self.model_changed(self.planets)
+        self.model_changed.emit(self.planets)
 
     def default_planets(self):
         self.add_planet()
@@ -44,7 +56,7 @@ class Simulation_model:
         self.space.add(body, shape)
         self.planets.append(body)
 
-        self.model_changed(self.planets)
+        self.model_changed.emit(self.planets)
 
     def step(self, dt):
         G = 2000
@@ -76,3 +88,27 @@ class Simulation_model:
 
     def reset_model(self):
         self.__init__()
+
+    def simuler(self):
+        running = True
+        self.simulation = Thread()
+        self.simulation.etat.connect(self.etat)
+        self.simulation.finished.connect(self.reset_model)
+        self.simulation.start()
+
+    def etat(self, etat):
+        if etat == False:
+            pass
+            #pause sim/ show pause text
+        else:
+            self.step(1/60)
+
+    def play_simulation(self):
+        print("play")
+
+
+    def pause_simulation(self):
+        print("pause")
+
+    def stop_simulation(self):
+        print("stop")
