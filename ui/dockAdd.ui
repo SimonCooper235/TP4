@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DockWidget</class>
+ <widget class="QDockWidget" name="DockWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>233</width>
+    <height>282</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>DockWidget</string>
+  </property>
+  <widget class="QWidget" name="dockWidgetContents">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="labelMass">
+      <property name="text">
+       <string>Mass:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QLineEdit" name="masslineEdit">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Mass</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelRadius">
+      <property name="text">
+       <string>Radius:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QLineEdit" name="radiuslineEdit">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Radius</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelPos">
+      <property name="text">
+       <string>Position:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="PosXlineEdit">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Position x</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLineEdit" name="PosYlineEdit">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="placeholderText">
+       <string>Position y</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="labelColor">
+      <property name="text">
+       <string>Color:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="couleurcomboBox">
+      <item>
+       <property name="text">
+        <string>Rouge</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Jaune</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Vert</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Bleu</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Mauve</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Noir</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="CreateButton">
+      <property name="text">
+       <string>Add</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

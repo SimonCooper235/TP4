@@ -1,5 +1,4 @@
 import math
-
 import pymunk
 from PyQt6.QtCore import pyqtSignal, QThread, QObject, Qt
 
@@ -9,7 +8,7 @@ from PyQt6.QtCore import pyqtSignal, QThread, QObject, Qt
  1- gravité universelle (gravité en fonction le l'attraction des corps) 
  2- gestion des collisions
  3- play/pause/stop/restart
- 4- ajout d'un object
+ 4- ajout d'un object   
  5- fix le lag
 
  """
@@ -19,11 +18,13 @@ class Thread(QThread):
     def run(self):
         self.etat.emit(True)
 
+
+
+
 class Planet(pymunk.Body):
     radius:float
     mass:float
     color:Qt.GlobalColor
-
 
     def __init__(self,mass, circle, radius, color):
         super().__init__(mass, circle)
@@ -72,7 +73,7 @@ class Simulation_model(QObject):
         G = 2000
         n = len(self.planets)
         for i in range(n):
-            for j in range(1+1,n):
+            for j in range(i+1,n):
                 p1 = self.planets[i]
                 p2 = self.planets[j]
 
@@ -93,7 +94,6 @@ class Simulation_model(QObject):
                 p1.apply_force_at_local_point((fx, fy))
                 p2.apply_force_at_local_point((-fx, -fy))
 
-
         self.model_changed.emit(True)
         self.space.step(dt)
 
@@ -106,6 +106,7 @@ class Simulation_model(QObject):
         self.simulation.etat.connect(self.etat)
         self.simulation.finished.connect(self.reset_model)
         self.simulation.start()      # le thread fait lag l'app
+        pass
 
     def etat(self, etat):
         if etat == False:

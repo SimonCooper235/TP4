@@ -1,5 +1,3 @@
-from PyQt6.QtWidgets import QLineEdit
-
 from model import model
 from view import view
 
