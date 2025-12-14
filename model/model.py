@@ -68,6 +68,7 @@ class Simulation_model():
         self.space.gravity = (0, 0)
         self.planets = []
         self.add_planet()
+        self.add_planet(100, 100, 20, 40, 10, 10)
         self.time = 0
 
     def add_planet(self, x=0, y=0, mass=10, radius=10, vx=0, vy=0):

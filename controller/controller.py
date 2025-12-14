@@ -26,7 +26,7 @@ class Simulation_controller():
         self.__model.add_planet(object)
 
     def play(self):
-        if not self.timer.stop():
+        if not self.running:
             self.timer.start(16)
             self.running = True
 
