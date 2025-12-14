@@ -43,3 +43,6 @@ class Simulation_controller():
     def update(self):
         self.__model.step(1/60)
         self.__view.update()
+
+    def get_planets(self):
+        return self.__model.get_planets()

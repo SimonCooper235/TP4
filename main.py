@@ -17,7 +17,8 @@ if __name__ == "__main__":
 
     view = Simulation_view()
     model = Simulation_model()
-    controler = Simulation_controller(model, view)
+    controller = Simulation_controller(model, view)
+    view.set_Controller(controller)
 
     window = view
     window.show()
