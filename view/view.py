@@ -48,7 +48,6 @@ class Simulation_view(QMainWindow):
            x = int(planet.position.x - planet.radius)
            y = int(250 - planet.position.y - planet.radius)
 
-
            p.drawEllipse(x,y, 2*planet.radius, 2*planet.radius)
 
        self.update()

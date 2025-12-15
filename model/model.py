@@ -12,6 +12,8 @@ from PyQt6.QtCore import pyqtSignal, QThread, QObject, Qt
  5- fix le lag
 
  """
+
+
 class Thread(QThread):
     etat = pyqtSignal(bool)
 
@@ -19,20 +21,16 @@ class Thread(QThread):
         self.etat.emit(True)
 
 
-
-
 class Planet(pymunk.Body):
-    radius:float
-    mass:float
-    color:Qt.GlobalColor
+    radius: float
+    mass: float
+    color: Qt.GlobalColor
 
-    def __init__(self,mass, circle, radius, color):
+    def __init__(self, mass, circle, radius, color):
         super().__init__(mass, circle)
 
         self.radius = radius
         self.color = color
-
-
 
 
 class Simulation_model(QObject):
@@ -46,7 +44,7 @@ class Simulation_model(QObject):
 
     def create_sim(self):
         self.space = pymunk.Space()
-        self.space.gravity = (0, 0)
+        self.space.gravity = (0, 10)
         self.default_planets()
         self.simuler()
 
@@ -56,8 +54,8 @@ class Simulation_model(QObject):
         self.add_planet()
         self.add_planet(120, 0, 0, 60, 20, 10, "rouge")
 
-    def add_planet(self, x = 500, y = 20, vx = 10, vy = 10, masse = 10, rayon = 12, couleur = "bleu"):
-        body = Planet(masse, pymunk.moment_for_circle(masse, 0, rayon), rayon, couleur)
+    def add_planet(self, x=500, y=20, vx=10, vy=10, masse=10, rayon=12, couleur="bleu"):
+        body = pymunk.Body(masse, pymunk.moment_for_circle(masse, 0, rayon)) #, rayon, couleur)
         body.position = (x, y)
         body.velocity = (vx, vy)
 
@@ -72,54 +70,64 @@ class Simulation_model(QObject):
     def step(self, dt):
         G = 2000
         n = len(self.planets)
-        for i in range(n):
-            for j in range(i+1,n):
-                p1 = self.planets[i]
-                p2 = self.planets[j]
+        # for i in range(n):
+        # for j in range(i+1,n):
+        p1 = self.planets[0]
+        p2 = self.planets[1]
 
+        dx = p2.position.x - p1.position.x
+        dy = p2.position.y - p1.position.y
+        dist_sqrt = dx * dx + dy * dy
 
-                dx = p2.position.x - p1.position.x
-                dy = p2.position.y - p1.position.y
-                dist_sqrt = dx * dx + dy * dy
+        if dist_sqrt == 0:
+            return
 
-                if dist_sqrt == 0:
-                    continue
+        dist = math.sqrt(dist_sqrt)
+        force_grav = G * p1.mass * p2.mass / dist_sqrt
 
-                dist = math.sqrt(dist_sqrt)
-                force_grav = G * p1.mass * p2.mass/ dist_sqrt
+        fx = force_grav * dx / dist
+        fy = force_grav * dy / dist
 
-                fx = force_grav * dx / dist
-                fy = force_grav * dy / dist
+        p1.apply_impulse_at_local_point((fx, fy))
+        p2.apply_force_at_local_point((-fx, -fy))
 
-                p1.apply_force_at_local_point((fx, fy))
-                p2.apply_force_at_local_point((-fx, -fy))
+        print((fx, fy))
+
+        print(p1.position, p2.position)
 
         self.model_changed.emit(True)
-        self.space.step(dt)
+
+
+# self.space.step(dt)
 
     def reset_model(self):
         self.__init__()
+
 
     def simuler(self):
         running = True
         self.simulation = Thread()
         self.simulation.etat.connect(self.etat)
         self.simulation.finished.connect(self.reset_model)
-        self.simulation.start()      # le thread fait lag l'app
+        self.simulation.start()  # le thread fait lag l'app
         pass
+
 
     def etat(self, etat):
         if etat == False:
             pass
-            #pause sim/ show pause text
+            # pause sim/ show pause text
         else:
-            self.step(1/60)
+            self.step(1 / 60)
+
 
     def play_simulation(self):
         print("play")
 
+
     def pause_simulation(self):
         print("pause")
+
 
     def stop_simulation(self):
         print("stop")
