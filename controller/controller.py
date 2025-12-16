@@ -1,3 +1,5 @@
+from PyQt6.QtCore import QTimer
+
 from model import model
 from view import view
 
@@ -12,13 +14,17 @@ class Simulation_controller():
         self.__view = view
         self.__view.set_Controller(self)
 
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update)
+        self.running = False
+
         self.__view.play_pushButton.clicked.connect(self.play)
         self.__view.pause_pushButton.clicked.connect(self.pause)
         self.__view.stop_pushButton.clicked.connect(self.stop)
 
         self.__view.get_dock().CreateButton.clicked.connect(self.ajout_object)
 
-        self.__model.model_changed.connect(self.__view.paintEvent)
+        #self.__model.model_changed.connect(self.__view.paintEvent)
 
 
     def ajout_object(self):
@@ -31,13 +37,26 @@ class Simulation_controller():
                                 None)
 
     def play(self):
-        self.__model.play_simulation()
+        if not self.running:
+            self.timer.start(16)
+            self.running = True
 
     def pause(self):
-        self.__model.pause_simulation()
+        self.timer.stop()
+        self.running = False
 
     def stop(self):
-        self.__model.stop_simulation()
+        self.timer.stop()
+        self.running = False
+        self.__model.reset()
+        self.__view.update()
 
-    def get_Planets(self):
+    def update(self):
+        self.__model.step(1 / 60)
+        self.__view.update()
+
+    def get_planets(self):
         return self.__model.planets
+
+    def get_rad(self, i):
+        return self.__model.get_rad(i)

@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34812ad-bb7f-4274-ac1c-d61f8cae154c" name="Changes" comment="view connecte a le reste, montre juste une photo, pas de mouvement">
+    <list default="true" id="a34812ad-bb7f-4274-ac1c-d61f8cae154c" name="Changes" comment="Troubleshooting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/view/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +97,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.main" />
       </list>
     </recent_temporary>

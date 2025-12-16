@@ -1,6 +1,8 @@
+import math
 from msilib.schema import Property
 
 import pymunk
+from PyQt6.QtCore import pyqtSignal, QObject
 
 """
             Truc a faire / fonctionalité requise
@@ -18,16 +20,10 @@ class Planet:
     __velocity = None
 
     def __init__(self, x, y, masse, radius, vx, vy):
-        self.body = pymunk.Body(masse, pymunk.moment_for_circle(masse, 0, radius))
-        self.body.position = (x, y)
-        self.body.velocity = (vx, vy)
-
-        self.position = (x, y)
+        self.position = x, y
         self.masse = masse
         self.radius = radius
-        self.velocity = (vx, vy)
-
-        self.shape = pymunk.Circle(self.body, radius)
+        self.velocity = vx, vy
 
     @property
     def position(self):
@@ -62,37 +58,89 @@ class Planet:
         self.__velocity = value
 
 
-class Simulation_model():
+class Simulation_model(QObject):
+
     def __init__(self):
+        super().__init__()
         self.space = pymunk.Space()
         self.space.gravity = (0, 0)
-        self.planets = []
-        self.add_planet()
-        self.add_planet(100, 100, 20, 40, 10, 10)
+
+        self.dt = 1/60
         self.time = 0
 
-    def add_planet(self, x=0, y=0, mass=10, radius=10, vx=0, vy=0):
-        self.planets.append(Planet(x, y, mass, radius, vx, vy))
+        self.planets = []
+        self.rad = []
+        self.data = {}
+
+
+        self.add_planet()
+        self.add_planet(100, 100, 100, 20, -10, 10)
+
+
+    def add_planet(self, x=0, y=0, mass=100, radius=10, vx=0, vy=0):
+        body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
+        body.position = x, y
+        body.velocity = (vx, vy)
+
+        shape = pymunk.Circle(body, radius)
+        shape.collision_type = 1
+
+        self.space.add(body, shape)
+
+        self.planets.append(body)
+        self.rad.append(radius)
+        self.data[body] = {
+            "position": [],
+            "velocity": [],
+            "acceleration": [],
+        }
+
 
     def apply_gravity(self):
-        for i, p1 in enumerate(self.planets):
-            for p2 in self.planets[i+1:]:
-                delta = p2.body.position - p1.body.position
-                dist = delta.length + 1e-5
-                force = 400 * p1.body.mass * p2.body.mass / dist**2
-                direction = delta.normalized()
-                p1.body.apply_force_at_world_point(force * direction, p1.body.position)
-                p2.body.apply_force_at_world_point(-force * direction, p2.body.position)
+        n = len(self.planets)
+
+        for i in range(n):
+            for j in range(i+1, n):
+                p1 = self.planets[i]
+                p2 = self.planets[j]
+
+                dx = p2.position.x - p1.position.x
+                dy = p2.position.y - p1.position.y
+                r2 = dx*dx + dy*dy + 1e-6
+                r = math.sqrt(r2)
+
+                force = 500 * p1.mass * p2.mass / r2
+                fx = force * dx / r
+                fy = force * dy / r
+
+                p1.apply_force_at_world_point((fx, fy), p1.position)
+                p2.apply_force_at_world_point((-fx, -fy), p2.position)
 
     def step(self, dt):
-        self.time += dt
         self.apply_gravity()
         self.space.step(dt)
+        self.time += dt
+
+        for planet in self.planets:
+            self.data[planet]["position"].append(
+                (self.time, planet.position.length)
+            )
+
+            self.data[planet]["velocity"].append(
+                (self.time, planet.velocity.length)
+            )
+
+            a = planet.force.length / planet.mass
+            self.data[planet]["acceleration"].append((self.time , a))
 
     def reset(self):
         self.space.remove()
         self.planets.clear()
         self.time = 0
+        self.__init__()
 
     def get_planets(self):
         return self.planets
+
+    def get_rad(self, i):
+        return self.rad[i]
