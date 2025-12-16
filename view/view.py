@@ -4,21 +4,21 @@ from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QWidget, QMainWindow
 from PyQt6.uic import loadUi
 
-from view.dock_view import dock_view
+from view.dock_view import Dock_view
 
 if TYPE_CHECKING:
     from controller.controller import Simulation_controller
 
 
 class Simulation_view(QMainWindow):
-    __dock:dock_view
+    __dock:Dock_view
 
     def __init__(self):
         super().__init__()
 
         loadUi("ui/v1.ui", self)
 
-        self.__dock = dock_view("Dock", self)
+        self.__dock = Dock_view("Dock", self)
         self.__dock.show()
 
         if TYPE_CHECKING:

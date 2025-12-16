@@ -22,19 +22,14 @@ class Simulation_controller():
         self.__view.pause_pushButton.clicked.connect(self.pause)
         self.__view.stop_pushButton.clicked.connect(self.stop)
 
-        self.__view.get_dock().CreateButton.clicked.connect(self.ajout_object)
-
-        #self.__model.model_changed.connect(self.__view.paintEvent)
-
+        self.__view.get_dock().createPushButton.clicked.connect(self.ajout_object)
 
     def ajout_object(self):
-        self.__model.add_planet(int(self.__view.get_dock().PosXlineEdit.text()),
-                                int(self.__view.get_dock().PosYlineEdit.text()),
-                                0,
-                                0,
-                                int(self.__view.get_dock().masslineEdit.text()),
-                                int(self.__view.get_dock().radiuslineEdit.text()),
-                                None)
+        self.__model.add_planet(int(self.__view.get_dock().posXLineEdit.text()),
+                                int(self.__view.get_dock().posYLineEdit.text()),
+                                int(self.__view.get_dock().masseLineEdit.text()),
+                                int(self.__view.get_dock().radiusLineEdit.text())
+                                )
 
     def play(self):
         if not self.running:
