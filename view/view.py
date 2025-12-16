@@ -1,5 +1,4 @@
 from typing import TYPE_CHECKING
-
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QWidget, QMainWindow
@@ -48,7 +47,6 @@ class Simulation_view(QMainWindow):
 
            x = int(400 +planet.position[0] - planet.radius)
            y = int(250 - planet.position[0] - planet.radius)
-
 
            p.drawEllipse(x,y, 2*planet.radius, 2*planet.radius)
 
