@@ -18,9 +18,9 @@ class Simulation_controller():
         self.timer.timeout.connect(self.update)
         self.running = False
 
-        self.__view.play_pushButton.clicked.connect(self.play)
-        self.__view.pause_pushButton.clicked.connect(self.pause)
-        self.__view.stop_pushButton.clicked.connect(self.stop)
+        self.__view.playPushButton.clicked.connect(self.play)
+        self.__view.pausePushButton.clicked.connect(self.pause)
+        self.__view.stopPushButton.clicked.connect(self.stop)
 
         self.__view.get_dock().createPushButton.clicked.connect(self.ajout_object)
 
@@ -28,8 +28,12 @@ class Simulation_controller():
         self.__model.add_planet(int(self.__view.get_dock().posXLineEdit.text()),
                                 int(self.__view.get_dock().posYLineEdit.text()),
                                 int(self.__view.get_dock().masseLineEdit.text()),
-                                int(self.__view.get_dock().radiusLineEdit.text())
+                                int(self.__view.get_dock().radiusLineEdit.text()),
+                                0,
+                                0,
+                                self.__view.get_dock().couleurComboBox.currentText()
                                 )
+        self.__view.update()
 
     def play(self):
         if not self.running:
@@ -55,3 +59,18 @@ class Simulation_controller():
 
     def get_rad(self, i):
         return self.__model.get_rad(i)
+
+    def get_couleurs(self, i):
+        return self.__model.get_couleurs(i)
+
+    def p_pressed(self):
+        if self.running:
+            self.pause()
+        else:
+            self.play()
+
+    def esc_pressed(self):
+        if not self.__view.get_dock().isHidden():
+            self.__view.get_dock().hide()
+        else:
+            self.__view.get_dock().show()

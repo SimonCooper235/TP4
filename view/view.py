@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPainter, QColor
-from PyQt6.QtWidgets import QWidget, QMainWindow
+from PyQt6.QtWidgets import QWidget, QMainWindow, QPushButton
 from PyQt6.uic import loadUi
 
 from view.dock_view import Dock_view
@@ -12,6 +12,9 @@ if TYPE_CHECKING:
 
 class Simulation_view(QMainWindow):
     __dock:Dock_view
+    playPushButton : QPushButton
+    pausePushButton : QPushButton
+    stopPushButton : QPushButton
 
     def __init__(self):
         super().__init__()
@@ -38,21 +41,25 @@ class Simulation_view(QMainWindow):
        planets = self.__controller.get_planets()
 
        p = QPainter(self)
-       p.fillRect(self.rect(), Qt.GlobalColor.black)
+       #p.fillRect(self.rect(), Qt.GlobalColor.black)
 
        for i in range(len(planets)):
-           p.setBrush(Qt.GlobalColor.cyan)
            planet = planets[i]
            x, y = planet.position
-           # p.setBrush(planet.color)
-           p.setBrush(Qt.GlobalColor.cyan)
+
+           color = self.__controller.get_couleurs(i)
+           p.setBrush(QColor(color))
 
            x, y = planet.position
+           r = int(self.__controller.get_rad(i))
            p.drawEllipse(
                int(400 - x),
                int(250 - y),
-               2 * int(self.__controller.get_rad(i)),
-               2 * int(self.__controller.get_rad(i))
+               2 * r,
+               2 * r
            )
-
-       self.update()
+    def keyPressEvent(self, event):
+        if event.key() == 80:
+            self.__controller.p_pressed()
+        elif event.key() == 16777216:
+            self.__controller.esc_pressed()

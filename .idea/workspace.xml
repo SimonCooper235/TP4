@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a34812ad-bb7f-4274-ac1c-d61f8cae154c" name="Changes" comment="mouvement fonctionne">
+    <list default="true" id="a34812ad-bb7f-4274-ac1c-d61f8cae154c" name="Changes" comment="Ajout de planetes">
       <change beforePath="$PROJECT_DIR$/controller/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ui/dockAdd.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/dockAdd.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/dock_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/dock_view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/v1.ui" beforeDir="false" afterPath="$PROJECT_DIR$/ui/v1.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/view.py" beforeDir="false" afterPath="$PROJECT_DIR$/view/view.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +152,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765914679973</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Ajout de planetes">
+      <option name="closed" value="true" />
+      <created>1765916047388</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1765916047388</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,7 +194,8 @@
     <MESSAGE value="Refait la classe model.py et ajuster la classe controller.py&#10;model:&#10;planet est un objet, play, pause, stop est dans controller&#10;controller: &#10;ajouter play, pause, stop, ajouter Qtimer" />
     <MESSAGE value="view connecte a le reste, montre juste une photo, pas de mouvement" />
     <MESSAGE value="mouvement fonctionne" />
-    <option name="LAST_COMMIT_MESSAGE" value="mouvement fonctionne" />
+    <MESSAGE value="Ajout de planetes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de planetes" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TP4$main.coverage" NAME="main Coverage Results" MODIFIED="1765571836400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

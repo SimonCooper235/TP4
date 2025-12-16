@@ -13,50 +13,6 @@ from PyQt6.QtCore import pyqtSignal, QObject
  4- ajout d'un object
 
  """
-class Planet:
-    __position = None
-    __masse = None
-    __radius = None
-    __velocity = None
-
-    def __init__(self, x, y, masse, radius, vx, vy):
-        self.position = x, y
-        self.masse = masse
-        self.radius = radius
-        self.velocity = vx, vy
-
-    @property
-    def position(self):
-        return self.__position
-
-    @position.setter
-    def position(self, value):
-        self.__position = value
-
-    @property
-    def masse(self):
-        return self.__masse
-
-    @masse.setter
-    def masse(self, value):
-        self.__masse = value
-
-    @property
-    def radius(self):
-        return self.__radius
-
-    @radius.setter
-    def radius(self, value):
-        self.__radius = value
-
-    @property
-    def velocity(self):
-        return self.__velocity
-
-    @velocity.setter
-    def velocity(self, value):
-        self.__velocity = value
-
 
 class Simulation_model(QObject):
 
@@ -70,6 +26,7 @@ class Simulation_model(QObject):
 
         self.planets = []
         self.rad = []
+        self.couleurs = []
         self.data = {}
 
 
@@ -77,7 +34,7 @@ class Simulation_model(QObject):
         self.add_planet(100, 100, 100, 20, -10, 10)
 
 
-    def add_planet(self, x=0, y=0, mass=100, radius=10, vx=0, vy=0):
+    def add_planet(self, x=0, y=0, mass=100, radius=10, vx=0, vy=0, couleur="cyan"):
         body = pymunk.Body(mass, pymunk.moment_for_circle(mass, 0, radius))
         body.position = x, y
         body.velocity = (vx, vy)
@@ -89,6 +46,7 @@ class Simulation_model(QObject):
 
         self.planets.append(body)
         self.rad.append(radius)
+        self.couleurs.append(couleur)
         self.data[body] = {
             "position": [],
             "velocity": [],
@@ -144,3 +102,8 @@ class Simulation_model(QObject):
 
     def get_rad(self, i):
         return self.rad[i]
+
+    def get_couleurs(self, i):
+        couleur = self.couleurs[i]
+        couleur_lower = couleur.lower()
+        return couleur_lower
