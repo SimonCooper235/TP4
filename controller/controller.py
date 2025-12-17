@@ -24,6 +24,10 @@ class Simulation_controller():
 
         self.__view.get_dock().createPushButton.clicked.connect(self.ajout_object)
 
+        self.__model.data_updated.connect(self.update_graphe)
+
+        self.data = False
+
     def ajout_object(self):
         self.__model.add_planet(int(self.__view.get_dock().posXLineEdit.text()),
                                 int(self.__view.get_dock().posYLineEdit.text()),
@@ -51,7 +55,7 @@ class Simulation_controller():
         self.__view.update()
 
     def update(self):
-        self.__model.step(1 / 60)
+        self.__model.step(1 / 60, self.data)
         self.__view.update()
 
     def get_planets(self):
@@ -74,3 +78,12 @@ class Simulation_controller():
             self.__view.get_dock().hide()
         else:
             self.__view.get_dock().show()
+
+    def g_pressed(self):
+        if self.data:
+            self.data = False
+        else:
+            self.data = True
+
+    def update_graphe(self, data):
+        self.__view.get_graph().update_graphe(data)

@@ -15,6 +15,7 @@ from PyQt6.QtCore import pyqtSignal, QObject
  """
 
 class Simulation_model(QObject):
+    data_updated = pyqtSignal(dict)
 
     def __init__(self):
         super().__init__()
@@ -74,22 +75,24 @@ class Simulation_model(QObject):
                 p1.apply_force_at_world_point((fx, fy), p1.position)
                 p2.apply_force_at_world_point((-fx, -fy), p2.position)
 
-    def step(self, dt):
+    def step(self, dt, data):
         self.apply_gravity()
         self.space.step(dt)
+        if data:
+            self.track_data(0)
         self.time += dt
 
-        for planet in self.planets:
-            self.data[planet]["position"].append(
-                (self.time, planet.position.length)
-            )
+    def track_data(self, body):
+        planet = self.planets[body]
 
-            self.data[planet]["velocity"].append(
-                (self.time, planet.velocity.length)
-            )
+        self.data[planet]["position"].append(planet.position)
 
-            a = planet.force.length / planet.mass
-            self.data[planet]["acceleration"].append((self.time , a))
+        self.data[planet]["velocity"].append(planet.velocity)
+
+        a = planet.force.length / planet.mass
+        self.data[planet]["acceleration"].append(a)
+
+        self.data_updated.emit(self.data)
 
     def reset(self):
         self.space.remove()
