@@ -39,9 +39,14 @@ class Graphe_view(QWidget):
         self.ax_velocity.cla()
         self.ax_acceleration.cla()
 
-        print(data)
-        self.ax_position.plot(data["position"], "r")
-        self.ax_velocity.plot(data["velocity"], "g")
-        self.ax_acceleration.plot(data["acceleration"], "b")
+        body = next(iter(data))
+
+        self.ax_position.set_title("Position")
+        self.ax_velocity.set_title("Velocity")
+        self.ax_acceleration.set_title("Acceleration")
+
+        self.ax_position.plot(data[body]["position"], "r")
+        self.ax_velocity.plot(data[body]["velocity"], "g")
+        self.ax_acceleration.plot(data[body]["acceleration"], "b")
 
         self.canvas.draw_idle()
